@@ -1,5 +1,7 @@
 //Imports
-
+const express = require('express')
+const router = express.Router()
+const dbpost = require ()
 
 
 
@@ -15,7 +17,16 @@
 
 
 
-// Get Post por id
+// Get Post por id Sadiel
+router.get('/:id', async (req, res) => {
+    try {
+        const idReq  = req.params.id
+        const post = await dbpost.findById( idReq )
+        res.status(200).send({ message: post })
+    } catch (error) {
+        res.status(400).send({ message: error })
+    }
+    })
 
 
 
@@ -68,3 +79,4 @@
 
 
 
+module.exports = router
