@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-
+//Sadiel
 const userSchema = new mongoose.Schema(
   {
     first_name: {
@@ -31,6 +31,9 @@ const userSchema = new mongoose.Schema(
     phone: {
       type: String,
       match: [/^[0-9]+$/, 'Invalid character']
+    },
+    profile_picture: {
+      type: String
     }
   },
   {

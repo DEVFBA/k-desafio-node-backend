@@ -8,7 +8,7 @@ const messages = require('./src/routes/messages')
 
 app.use(express.json())
 app.use('/user', user)
-app.use('/messages', messages)
+//app.use('/messages', messages)
 
 app.get('/', (req, res) => {
   res.status(200).send('Hey there!')
