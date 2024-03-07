@@ -4,11 +4,12 @@ const app = express()
 const port = 3002
 const mongoDB = require('./src/db/dbM')
 const user = require('./src/routes/user')
-const messages = require('./src/routes/messages')
+const post = require('./src/routes/posts')
 
 app.use(express.json())
 app.use('/user', user)
-//app.use('/messages', messages)
+app.use('/post', post)
+// app.use('/messages', messages)
 
 app.get('/', (req, res) => {
   res.status(200).send('Hey there!')
