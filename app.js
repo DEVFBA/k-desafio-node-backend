@@ -5,8 +5,12 @@ const port = 3002
 const mongoDB = require('./src/db/dbM')
 const user = require('./src/routes/user')
 const post = require('./src/routes/posts')
+const cors = require('cors');
+
 
 app.use(express.json())
+app.use(cors());
+
 app.use('/user', user)
 app.use('/post', post)
 // app.use('/messages', messages)
