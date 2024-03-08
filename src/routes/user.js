@@ -28,6 +28,7 @@ router.post('/', async (req, res) => {
     user.password = await Users.encryptPassword(user.password)
     const newUser = await Users.create(user)
     await newUser.save()
+    res.status(201).send({ message:'Success', data: user })
   } catch (error) {
     res.status(400).send({ message: error })
   }
