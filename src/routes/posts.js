@@ -1,5 +1,3 @@
-=======
-//Imports
 
 const express = require('express')
 const router = express.Router()
@@ -44,7 +42,6 @@ router.get('/:id', async (req, res) => {
     try {
         const idReq  = req.params.id
         const post = await Post.findById( idReq )
-        const post = await Posts.findById( idReq )
 
         res.status(200).send({ message: post })
     } catch (error) {
