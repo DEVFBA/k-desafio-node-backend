@@ -41,7 +41,7 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
     try {
         const idReq  = req.params.id
-        const post = await Post.findById( idReq )
+        const post = await Posts.findById( idReq )
 
         res.status(200).send({ message: post })
     } catch (error) {
@@ -79,7 +79,7 @@ router.delete('/:id_post', async (req, res) => {
     try {
         const { id_author } = req.headers
         const { id_post} = req.params
-        const todelete = await Post.findById(id_post)
+        const todelete = await Posts.findById(id_post)
         if (todelete.user == id_author) {
             await Post.findByIdAndDelete(id_post)
             res.status(200).send({ message: 'Post deleted' })
