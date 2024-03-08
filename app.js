@@ -1,6 +1,7 @@
 require('dotenv').config() // importante hacer esto, o no conecta jajajaja
 const express = require('express')
 const app = express()
+const cors = require('cors')
 const port = 3002
 const mongoDB = require('./src/db/dbM')
 const user = require('./src/routes/user')
@@ -9,7 +10,9 @@ const cors = require('cors');
 
 
 app.use(express.json())
-app.use(cors());
+
+app.use(cors())
+
 
 app.use('/user', user)
 app.use('/post', post)

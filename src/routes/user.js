@@ -10,7 +10,10 @@ router.post('/login', async (req, res) => {
     if (!user || !(await Users.isValidPassword(password, user.password))) {
       res.status(401).send({ message: 'invalid password' })
     } else {
+      let { authorization } = req.headers
       const token = await Users.createToken({ _id: user._id, first_name: user.first_name })
+      authorization = `Bearer ${token}`
+      console.log(authorization)
       res.status(201).send({ message: 'login succesful', data: token })
     }
   } catch (error) {

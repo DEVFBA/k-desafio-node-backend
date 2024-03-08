@@ -59,13 +59,15 @@ router.get('/:id', async (req, res) => {
 
 //Post Posts Angie
 
-router.post('/:userid', async (req, res) => {
-    try {
-        const { userid } = req.params
-        let post = req.body
-        post.user = userid
-        const newPost = await Posts.create(post)
-        res.status(201).send({ message: 'new post created', data: newPost })
+
+router.post('/', auth.validUser, async (req, res) => {
+  try {
+    const user = req.user
+    let post = req.body
+    post.user = user._id
+    const newPost = await Posts.create(post)
+    res.status(201).send({ message: 'new post created', data: newPost })
+
   } catch (error) {
         console.log(error)
         res.status(400).send({ message: error })
