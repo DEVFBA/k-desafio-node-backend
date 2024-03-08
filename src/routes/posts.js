@@ -14,7 +14,6 @@ router.get('/', async (req, res) => {
   try{
 
     const posts = await Posts.find();
-    console.log(posts);
     res.send({message: 'OK', data: posts});
 
   } catch {
@@ -78,21 +77,17 @@ router.put("/:postid", auth.validUser, async (req, res) => {
       const { postid } = req.params;
       const postData = req.body;
       const userIdFromToken = req.user.id;
-      console.log("Usuario desde token:", userIdFromToken);
       const existingPost = await Posts.findById(postid);
-      console.log("Detalles del Post Existente:", existingPost);
       if (!existingPost) {
         return res.status(404).send({ message: "Post no encontrado" });
       }
       const updatedPost = await Posts.findByIdAndUpdate(postid, postData, {
         new: true,
       });
-      console.log("Post actualizado correctamente:", updatedPost);
       res
         .status(200)
         .send({ message: "Post actualizado correctamente", data: updatedPost });
     } catch (error) {
-      console.error("Error al actualizar el post:", error.message);
       res
         .status(400)
         .send({ message: "Error al actualizar el post", error: error.message });
