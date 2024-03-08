@@ -12,11 +12,11 @@ const Posts = require('../models/model_posts')
 
 //Post Posts Angie
 
-router.post('/:userid', async (req, res) => {
+router.post('/', auth.validUser, async (req, res) => {
   try {
-    const { userid } = req.params
+    const user = req.user
     let post = req.body
-    post.user = userid
+    post.user = user._id
     const newPost = await Posts.create(post)
     res.status(201).send({ message: 'new post created', data: newPost })
   } catch (error) {
