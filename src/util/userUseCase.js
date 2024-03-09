@@ -29,7 +29,6 @@ const updateUser = async (id, user) => {
       if (u.id === id) u = user
       return u
     })
-    console.log(newList)
     return await writeFileAsync(newList)
   } catch (error) {
     return null
@@ -43,7 +42,6 @@ const deleteUser = async (id) => {
       if (u.id === id) u = {}
       return u
     })
-    console.log(newList)
     return await writeFileAsync(newList)
   } catch (error) {
     return null
