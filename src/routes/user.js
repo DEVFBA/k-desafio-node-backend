@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const auth = require('../middlewares/userauth')
 const Users = require('../models/model_users')
+const { findById } = require('../models/model_posts')
 
 router.post('/login', async (req, res) => {
   try {
@@ -36,6 +37,16 @@ router.post('/', async (req, res) => {
 router.get('/', async (req, res) => {
   try {
     const users = await Users.find()
+    res.status(200).send({ message: users })
+  } catch (error) {
+    res.status(400).send({ message: error })
+  }
+})
+
+router.get('/:id', async (req, res) => {
+  try {
+    const { id } = req.params
+    const users = await Users.findById(id)
     res.status(200).send({ message: users })
   } catch (error) {
     res.status(400).send({ message: error })
