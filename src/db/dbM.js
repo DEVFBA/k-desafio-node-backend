@@ -1,6 +1,5 @@
 const mongoose = require('mongoose')
-const URI = 'mongodb+srv://kodemia:kodemia@gen31js.ng7osxl.mongodb.net/gen31-js'
-//const URI = 'mongodb+srv://angelagar:Ayd091388@clusterkodemia31.6jkc48j.mongodb.net/Kodemia31'
+const URI = `mongodb+srv://${process.env.USER_DB}:${process.env.PASSWORD_DB}@gen31js.ng7osxl.mongodb.net/${process.env.DATABASE}`;
 
 const connect = new Promise(async (resolve, reject) => {
   const conn = mongoose.connect(URI)

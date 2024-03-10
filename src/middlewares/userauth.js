@@ -1,24 +1,37 @@
 // const { findUserById } = require('../util/fileSystem')
-const Users = require('../models/model_users')
+//const Users = require('../models/model_users')
 const jwt = require('jsonwebtoken')
 
 // MIDDLEWARE
+
 const validUser = async (req, res, next) => {
-  // const { userid } = req.headers
-  // const user = await Users.findById(userid)
-  const { authorization } = req.headers
-  const token = authorization.split(' ')[1] // se retiro la parte que dice Bearer en el header
+
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SIGN)
-    const date = Math.floor(new Date().getTime() / 1000)
+
+    const { authorization } = req.headers;
+    const token = authorization.split(' ')[1]; 
+    const decoded = jwt.verify(token, process.env.JWT_SIGN);
+    const date = Math.floor(new Date().getTime() / 1000);
+
     if (decoded.exp < date) {
-      res.status(401).send({ message: 'session expired' })
+
+      res.status(401).send({ 
+        message: 'Session expired',
+        data: null 
+      });
+
     } else {
-      req.user = decoded
-      next()
+      
+      req.user = decoded;
+
+      next();
+      
     }
+
   } catch (error) {
-    res.status(401).send('Login is required')
+
+    res.status(401).send('Login is required');
+
   }
 }
 

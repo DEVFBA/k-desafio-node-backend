@@ -2,7 +2,7 @@
 # Backend Dream Team
 
 ## Made by: 
--[Angie]() 🤪
+- [Angie](https://github.com/angelaggar) 🤪
 - [Angel](https://github.com/DEVFBA) 🤓
 - [Sadiel]() 💀
 - [David]() 🐒
