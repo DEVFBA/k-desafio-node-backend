@@ -1,4 +1,4 @@
-require('dotenv').config() // importante hacer esto, o no conecta jajajaja
+require('dotenv').config() 
 const express = require('express')
 const app = express()
 const cors = require('cors')
@@ -15,14 +15,10 @@ app.use(cors())
 
 app.use('/user', user)
 app.use('/post', post)
-// app.use('/messages', messages)
 
 app.get('/', (req, res) => {
   res.status(200).send('Hey there!')
 })
-
-// conectamos la base de datos de mongo en la app, importando
-// la funcion desde el archivo que hicimos para ello
 
 mongoDB.connect
   .then((message) => {

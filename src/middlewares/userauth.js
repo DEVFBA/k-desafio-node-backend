@@ -1,8 +1,4 @@
-// const { findUserById } = require('../util/fileSystem')
-//const Users = require('../models/model_users')
 const jwt = require('jsonwebtoken')
-
-// MIDDLEWARE
 
 const validUser = async (req, res, next) => {
 

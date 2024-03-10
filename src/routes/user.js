@@ -64,8 +64,7 @@ router.post('/login', async (req, res) => {
         _id: user._id, 
         first_name: user.first_name 
       });
-
-      authorization = `Bearer ${token}`;
+      
       res.status(201).send({ 
         message: 'Login Successful', 
         data: { 
@@ -102,9 +101,54 @@ router.get('/', async (req, res) => {
 
 })
 
-/**
- * TODO: Gat User By ID for retrieving user data
- */
+router.get('/:email', validUser, async (req, res) => {
+
+  try {
+    
+    const { email } = req.params;
+
+    const user = await Users.findOne({ email: email });
+
+    if(!user){
+
+      res.status(401).send({ 
+        message: 'User Not Found', 
+        data: null
+      });
+
+      return;
+
+    }
+
+    if(req.user._id === user._id.valueOf()){
+    
+      res.status(200).send({ 
+        message: 'User Found', 
+        data: user 
+      });
+
+    } else {
+
+      res.status(401).send({
+        message: 'Unauthorized User',
+        data: null
+      })
+
+    }
+    
+
+  } catch (error) {
+
+    console.log(error);
+
+    res.status(401).send({
+      message: 'Unauthorized User',
+      data: null
+    })
+    
+  }
+
+})
 
 router.put('/:id', validUser, async (req, res) => {
 
