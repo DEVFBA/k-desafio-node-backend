@@ -68,7 +68,10 @@ router.post('/login', async (req, res) => {
       authorization = `Bearer ${token}`;
       res.status(201).send({ 
         message: 'Login Successful', 
-        data: { token: token, userId: user._id } 
+        data: { 
+          token: token, 
+          userId: user._id 
+        } 
       });
 
     }
@@ -99,23 +102,42 @@ router.get('/', async (req, res) => {
 
 })
 
+/**
+ * TODO: Gat User By ID for retrieving user data
+ */
+
 router.put('/:id', validUser, async (req, res) => {
 
   try {
 
     const { id } = req.params;
-    const user = req.body;
-    const updatedUser = Users.findByIdAndUpdate(id, user, { returnOriginal: false });
 
-    res.status(200).send({ 
-      message: 'User edited', 
-      data: updatedUser 
-    });
+    if(req.user._id === id){
+
+      const dataToUpdate = req.body;
+      const updatedUser = await Users.findByIdAndUpdate(id, dataToUpdate, { returnOriginal: false });
+  
+      res.status(200).send({ 
+        message: 'User edited', 
+        data: updatedUser 
+      });
+
+    } else {
+
+      res.status(401).send({
+        message: 'Unauthorized User',
+        data: null
+      })
+
+    }
+
 
   } catch (error) {
 
+    console.log(error);
+
     res.status(400).send({ 
-      message: 'Error: Please contact your Systema Administrator',
+      message: 'Error: Please contact your System Administrator',
       data: null 
     });
 
@@ -127,18 +149,29 @@ router.delete('/:id', validUser, async (req, res) => {
   try {
 
     const { id } = req.params;
+
+    if(req.user._id === id){
+
+      await Users.findByIdAndDelete(id);
     
-    await Users.findByIdAndDelete(id);
-    
-    res.status(200).send({ 
-      message: 'User deleted', 
-      data: null 
-    });
+      res.status(200).send({ 
+        message: 'User deleted', 
+        data: null 
+      });
+
+    } else {
+
+      res.status(401).send({
+        message: 'Unauthorized User',
+        data: null
+      })
+
+    }
 
   } catch (error) {
     
     res.status(400).send({ 
-      message: 'Error: Please contact your systema administrator',
+      message: 'Error: Please contact your system administrator',
       data: null 
     });
   

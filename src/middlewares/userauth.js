@@ -9,28 +9,32 @@ const validUser = async (req, res, next) => {
   try {
 
     const { authorization } = req.headers;
-    const token = authorization.split(' ')[1]; 
-    const decoded = jwt.verify(token, process.env.JWT_SIGN);
-    const date = Math.floor(new Date().getTime() / 1000);
 
-    if (decoded.exp < date) {
+    if(!authorization){
 
-      res.status(401).send({ 
-        message: 'Session expired',
-        data: null 
-      });
+      res.status(401).send({
+        message: 'Required Login',
+        data: null
+      })
 
-    } else {
-      
-      req.user = decoded;
+      return;
 
-      next();
-      
     }
+
+    const token = authorization.split(' ')[1];
+    const decoded = jwt.verify(token, process.env.JWT_SIGN);
+
+    req.user = decoded;
+    next();
 
   } catch (error) {
 
-    res.status(401).send('Login is required');
+    const tokenError = new Error(error);
+
+    res.status(400).send({
+      message:`${tokenError}`,
+      data: null
+    });
 
   }
 }
